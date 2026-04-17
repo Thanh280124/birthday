@@ -13,7 +13,7 @@ def img_to_base64(path):
 # TITLE + GLOBAL EFFECTS (Hearts + Fireworks + Music)
 # =========================
 st.markdown("""
-    <h1 style='text-align:center;color:#ff4b6e;font-size:40px;'>
+    <h1 style='text-align:center;color:#ff4b6e;font-size:30px;'>
         🎂 Happy Birthday 🎂
     </h1>
     """, unsafe_allow_html=True)
