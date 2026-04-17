@@ -203,7 +203,7 @@ Hãy luôn hạnh phúc và xinh đẹp nhá 🌸✨`;
     // Thử chạy ngay lần đầu
     setTimeout(tryStartTyping, 600);
     </script>
-    """, height=900)
+    """, height=800)
 
     # =========================
 # Tab 3: Kỷ niệm (Tối ưu cho điện thoại)
@@ -245,7 +245,6 @@ with tab3:
                 controls 
                 autoplay 
                 loop 
-                muted 
                 playsinline
                 style="width: 92%; 
                        max-width: 900px; 
