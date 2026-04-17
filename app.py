@@ -203,7 +203,7 @@ Hãy luôn hạnh phúc và xinh đẹp nhá 🌸✨`;
     // Thử chạy ngay lần đầu
     setTimeout(tryStartTyping, 600);
     </script>
-    """, height=1000)
+    """, height=900)
 
     # =========================
 # Tab 3: Kỷ niệm (Tối ưu cho điện thoại)
