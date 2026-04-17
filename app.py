@@ -251,6 +251,6 @@ with tab3:
               Trình duyệt của bạn không hỗ trợ phát video.
             </video>
         </div>
-        """, height=1800)
+        """, height=800)
     else:
         st.info("📁 Đặt file video/video.mp4 để hiển thị video.")
