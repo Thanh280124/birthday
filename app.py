@@ -150,7 +150,7 @@ with tab2:
     st.markdown("## 💌 Lời chúc (Nhỡ chị ko đọc được chữ từ thiệp)")
 
     st.components.v1.html("""
-    <div id="typing" style="font-size:24px; text-align:center; color:#ff4b6e; padding:40px 30px; min-height:350px; line-height:1.5; white-space: pre-line; font-weight:400;"></div>
+    <div id="typing" style="font-size:18px; text-align:center; color:#ff4b6e; padding:40px 30px; min-height:450px; line-height:1.5; white-space: pre-line; font-weight:400;"></div>
 
     <script>
     const fullText = `Gửi tới Bống 💖
