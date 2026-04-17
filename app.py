@@ -206,7 +206,7 @@ Hãy luôn hạnh phúc và xinh đẹp nhá 🌸✨`;
     """, height=600)
 
     # =========================
-# Tab 3: Kỷ niệm (Gallery + Video responsive)
+# Tab 3: Kỷ niệm (Tối ưu cho điện thoại)
 # =========================
 with tab3:
     st.markdown("## 📸 Kỷ niệm")
@@ -228,7 +228,7 @@ with tab3:
                 cols[i % 3].image(img, use_container_width=True)
 
     # ========================
-    # Video Responsive (1800px máy tính - 800px điện thoại)
+    # Video - Tối ưu cho điện thoại (cao 800px)
     # ========================
     video_path = "video/video.mp4"
     if os.path.exists(video_path):
@@ -239,7 +239,7 @@ with tab3:
         video_b64 = base64.b64encode(video_bytes).decode()
 
         st.components.v1.html(f"""
-        <div style="display: flex; justify-content: center; margin: 30px 0; padding: 10px;">
+        <div style="display: flex; justify-content: center; margin: 25px 0; padding: 10px;">
             <video 
                 id="birthdayVideo"
                 controls 
@@ -247,32 +247,16 @@ with tab3:
                 loop 
                 muted 
                 playsinline
-                style="width: 90%; 
-                       max-width: 920px; 
+                style="width: 92%; 
+                       max-width: 900px; 
+                       height: 800px; 
                        border-radius: 18px; 
-                       box-shadow: 0 10px 40px rgba(255, 75, 110, 0.35);
-                       border: 3px solid #ff4b6e;">
+                       box-shadow: 0 8px 30px rgba(255, 75, 110, 0.4);
+                       border: 3px solid #ff4b6e;
+                       object-fit: contain;">
               <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
             </video>
         </div>
-
-        <style>
-        /* Máy tính và màn hình lớn */
-        @media (min-width: 769px) {{
-            #birthdayVideo {{
-                height: 1800px !important;
-                object-fit: contain;
-            }}
-        }}
-        
-        /* Điện thoại và màn hình nhỏ */
-        @media (max-width: 768px) {{
-            #birthdayVideo {{
-                height: 800px !important;
-                object-fit: contain;
-            }}
-        }}
-        </style>
 
         <!-- Fix hiển thị video trong Streamlit tabs -->
         <script>
@@ -282,8 +266,8 @@ with tab3:
                 video.load();
                 video.play().catch(() => {{}});
             }}
-        }}, 1000);
+        }}, 800);
         </script>
-        """, height=1950)   # Cao đủ để chứa 1800px trên desktop
+        """, height=650)
     else:
         st.info("📁 Đặt file `video/video.mp4` để hiển thị video.")
