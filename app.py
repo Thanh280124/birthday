@@ -203,7 +203,7 @@ Hãy luôn hạnh phúc và xinh đẹp nhá 🌸✨`;
     // Thử chạy ngay lần đầu
     setTimeout(tryStartTyping, 600);
     </script>
-    """, height=600)
+    """, height=800)
 
     # =========================
 # Tab 3: Kỷ niệm (Tối ưu cho điện thoại)
@@ -268,6 +268,6 @@ with tab3:
             }}
         }}, 800);
         </script>
-        """, height=650)
+        """, height=750)
     else:
         st.info("📁 Đặt file `video/video.mp4` để hiển thị video.")
