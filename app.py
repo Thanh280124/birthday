@@ -133,7 +133,7 @@ with tab1:
             <div class="flip-card-back"><img src="data:{mime_type};base64,{inside_b64}"></div>
           </div>
         </div>
-        <p style="text-align:center;color:#ff4b6e;">👆 Chạm hoặc click để lật thiệp</p>
+        <p style="text-align:center;color:#ff4b6e;">👆 click để thấy chữ Thành xấu thế nào:)))</p>
         <script>
         const card = document.getElementById("card");
         card.addEventListener("click", () => card.classList.toggle("flipped"));
@@ -143,50 +143,114 @@ with tab1:
     else:
         st.warning("Vui lòng thêm file `images/cover.jpg` và `images/inside.jpg`")
 
-# Tab 2: Lời chúc (chữ chạy lại mỗi lần chuyển vào tab)
+# =========================
+# Tab 2: Lời chúc - Chữ chạy 1 lần rồi dừng hẳn
+# =========================
 with tab2:
-    st.markdown("## 💌 Lời chúc")
-    st.components.v1.html("""
-    <div id="typing" style="font-size:26px;text-align:center;color:#ff4b6e;padding:40px 20px;min-height:180px;line-height:1.7;"></div>
-    <script>
-    const txt = "Chúc bạn sinh nhật vui vẻ, hạnh phúc ngập tràn và luôn cười thật nhiều mỗi ngày 💖🌸✨";
-    function startType() {
-      const el = document.getElementById("typing");
-      el.innerHTML = "";
-      let i = 0;
-      const intv = setInterval(() => {
-        if (i < txt.length) {
-          el.innerHTML += txt.charAt(i);
-          i++;
-        } else clearInterval(intv);
-      }, 65);
-    }
-    startType();
-    </script>
-    """, height=280)
+    st.markdown("## 💌 Lời chúc (Nhỡ chị ko đọc được chữ từ thiệp)")
 
-# Tab 3: Kỷ niệm
+    st.components.v1.html("""
+    <div id="typing" style="font-size:24px; text-align:center; color:#ff4b6e; padding:40px 30px; min-height:350px; line-height:1.5; white-space: pre-line; font-weight:400;"></div>
+
+    <script>
+    const fullText = `Gửi tới Bống 💖
+Em chúc chị tuổi mới thật nhiều niềm vui, lúc nào cũng xinh đẹp và rạng rỡ như bây giờ. 
+Đặc biệt là sức khỏe đó, hãy chú ý hơn về giấc ngủ và ăn uống để không bị ốm nhá.
+
+Tuổi mới mong rằng chị sẽ có nhiều cơ hội tốt và đạt được những mục tiêu, ước mơ mà chị muốn. 
+Mong rằng muôn vàn sự tích cực và may mắn sẽ đến với chị.
+
+Hihi em vui vì bản thân có cơ hội được làm quen và nói chuyện với chị mỗi ngày. 
+Chị đặc biệt vãi, vừa cute, xinh, giỏi, chăm chỉ và mạnh mẽ, cá tính nữa.
+
+Em mong chị sẽ có 1 năm ý nghĩa và nhiều tiếng cười, không bị nỗi buồn hay sự tiêu cực bủa vây. 
+Cũng mong em là một phần nhỏ trong những niềm vui và nụ cười của chị ạ.
+
+Hãy luôn hạnh phúc và xinh đẹp nhá 🌸✨`;
+
+    let i = 0;
+    let typingInterval = null;
+    let finished = false;
+
+    function type() {
+        if (finished) return;
+        
+        const el = document.getElementById("typing");
+        if (!el) return;
+
+        if (i < fullText.length) {
+            el.innerHTML += fullText.charAt(i);
+            i++;
+        } else {
+            clearInterval(typingInterval);
+            finished = true;
+        }
+    }
+
+    // Hàm kiểm tra tab có đang mở không (cách này ổn định hơn với Streamlit)
+    function tryStartTyping() {
+        if (finished) return;
+        if (document.getElementById("typing").offsetParent !== null) {
+            if (!typingInterval) {
+                typingInterval = setInterval(type, 65);
+            }
+        }
+    }
+
+    // Kiểm tra mỗi 250ms
+    setInterval(tryStartTyping, 250);
+
+    // Thử chạy ngay lần đầu
+    setTimeout(tryStartTyping, 600);
+    </script>
+    """, height=600)
+
+# =========================
+# Tab 3: Kỷ niệm (Gallery + Video vừa đẹp)
+# =========================
 with tab3:
     st.markdown("## 📸 Kỷ niệm")
 
-    # Gallery
+    # Gallery ảnh
     folder = "images"
     if os.path.exists(folder):
-        files = [f for f in os.listdir(folder) if f.lower().endswith(('.jpg','.jpeg','.png')) and f not in ["cover.jpg","inside.jpg"]]
+        files = [f for f in os.listdir(folder) 
+                 if f.lower().endswith(('.jpg', '.jpeg', '.png')) 
+                 and f not in ["cover.jpg", "inside.jpg"]]
+        
         if files:
+            st.markdown("### 🖼️ Hình ảnh kỷ niệm")
             cols = st.columns(3)
-            for i, f in enumerate(files):
-                cols[i%3].image(Image.open(os.path.join(folder, f)), use_container_width=True)
+            for i, file in enumerate(files):
+                img_path = os.path.join(folder, file)
+                cols[i % 3].image(Image.open(img_path), use_container_width=True)
 
-    # Video
+    # Video - Đã chỉnh size vừa màn hình, đẹp hơn
     video_path = "video/video.mp4"
     if os.path.exists(video_path):
-        st.markdown("### 🎥 Video kỷ niệm")
-        video_b64 = base64.b64encode(open(video_path, "rb").read()).decode()
+        
+        with open(video_path, "rb") as f:
+            video_bytes = f.read()
+        video_b64 = base64.b64encode(video_bytes).decode()
+
         st.components.v1.html(f"""
-        <video width="100%" controls autoplay loop muted playsinline>
-          <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
-        </video>
-        """, height=520)
+        <div style="display: flex; justify-content: center; margin: 25px 0;">
+            <video 
+                width="85%" 
+                height="auto" 
+                controls 
+                autoplay 
+                loop 
+                
+                playsinline
+                style="max-width: 920px; 
+                       border-radius: 18px; 
+                       box-shadow: 0 10px 40px rgba(255, 75, 110, 0.35);
+                       border: 3px solid #ff4b6e;">
+              <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
+              Trình duyệt của bạn không hỗ trợ phát video.
+            </video>
+        </div>
+        """, height=2000)
     else:
-        st.info("Đặt video/video.mp4 để hiển thị video.")
+        st.info("📁 Đặt file video/video.mp4 để hiển thị video.")
