@@ -205,13 +205,15 @@ Hãy luôn hạnh phúc và xinh đẹp nhá 🌸✨`;
     </script>
     """, height=600)
 
-# =========================
-# Tab 3: Kỷ niệm (Gallery + Video vừa đẹp)
+    # =========================
+# Tab 3: Kỷ niệm (Gallery + Video responsive)
 # =========================
 with tab3:
     st.markdown("## 📸 Kỷ niệm")
 
+    # ========================
     # Gallery ảnh
+    # ========================
     folder = "images"
     if os.path.exists(folder):
         files = [f for f in os.listdir(folder) 
@@ -222,35 +224,66 @@ with tab3:
             st.markdown("### 🖼️ Hình ảnh kỷ niệm")
             cols = st.columns(3)
             for i, file in enumerate(files):
-                img_path = os.path.join(folder, file)
-                cols[i % 3].image(Image.open(img_path), use_container_width=True)
+                img = Image.open(os.path.join(folder, file))
+                cols[i % 3].image(img, use_container_width=True)
 
-    # Video - Đã chỉnh size vừa màn hình, đẹp hơn
+    # ========================
+    # Video Responsive (1800px máy tính - 800px điện thoại)
+    # ========================
     video_path = "video/video.mp4"
     if os.path.exists(video_path):
+        st.markdown("### 🎥 Video kỷ niệm")
         
         with open(video_path, "rb") as f:
             video_bytes = f.read()
         video_b64 = base64.b64encode(video_bytes).decode()
 
         st.components.v1.html(f"""
-        <div style="display: flex; justify-content: center; margin: 25px 0;">
+        <div style="display: flex; justify-content: center; margin: 30px 0; padding: 10px;">
             <video 
-                width="85%" 
-                height="auto" 
+                id="birthdayVideo"
                 controls 
                 autoplay 
                 loop 
-                
+                muted 
                 playsinline
-                style="max-width: 920px; 
+                style="width: 90%; 
+                       max-width: 920px; 
                        border-radius: 18px; 
                        box-shadow: 0 10px 40px rgba(255, 75, 110, 0.35);
                        border: 3px solid #ff4b6e;">
               <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
-              Trình duyệt của bạn không hỗ trợ phát video.
             </video>
         </div>
-        """, height=800)
+
+        <style>
+        /* Máy tính và màn hình lớn */
+        @media (min-width: 769px) {{
+            #birthdayVideo {{
+                height: 1800px !important;
+                object-fit: contain;
+            }}
+        }}
+        
+        /* Điện thoại và màn hình nhỏ */
+        @media (max-width: 768px) {{
+            #birthdayVideo {{
+                height: 800px !important;
+                object-fit: contain;
+            }}
+        }}
+        </style>
+
+        <!-- Fix hiển thị video trong Streamlit tabs -->
+        <script>
+        setTimeout(() => {{
+            const video = document.getElementById("birthdayVideo");
+            if (video) {{
+                video.load();
+                video.play().catch(() => {{}});
+            }}
+        }}, 1000);
+        </script>
+        """, height=1950)   # Cao đủ để chứa 1800px trên desktop
     else:
-        st.info("📁 Đặt file video/video.mp4 để hiển thị video.")
+        st.info("📁 Đặt file `video/video.mp4` để hiển thị video.")
