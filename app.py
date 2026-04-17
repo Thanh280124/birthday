@@ -232,7 +232,6 @@ with tab3:
     # ========================
     video_path = "video/video.mp4"
     if os.path.exists(video_path):
-        st.markdown("### 🎥 Video kỷ niệm")
         
         with open(video_path, "rb") as f:
             video_bytes = f.read()
